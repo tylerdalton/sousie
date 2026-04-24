@@ -27,16 +27,23 @@ export default async function RecipesPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
             <h1 style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: '1.3rem' }}>👩‍🍳</span>
-              <span style={{ opacity: 0.7, fontWeight: 400, fontSize: '1rem' }}>Sousie</span>
+              <Link href="/weeks" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: '1.3rem' }}>👩‍🍳</span>
+                <span style={{ opacity: 0.7, fontWeight: 400, fontSize: '1rem' }}>Sousie</span>
+              </Link>
               <span style={{ opacity: 0.4, fontWeight: 300 }}>·</span>
               Sousie&apos;s Recipes
             </h1>
             <p>{(recipes ?? []).length} recipes in your library</p>
           </div>
-          <Link href="/" style={{ background: 'rgba(255,255,255,0.18)', border: 'none', color: 'white', borderRadius: 8, padding: '5px 10px', fontSize: '0.73rem', cursor: 'pointer', textDecoration: 'none' }}>
-            ← Home
-          </Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <Link href="/dietary-counsel" style={{ background: 'rgba(255,255,255,0.18)', color: 'white', borderRadius: 8, padding: '5px 10px', fontSize: '0.73rem', textDecoration: 'none', fontWeight: 600 }}>
+              🥗 Counsel
+            </Link>
+            <Link href="/weeks" style={{ background: 'rgba(255,255,255,0.18)', border: 'none', color: 'white', borderRadius: 8, padding: '5px 10px', fontSize: '0.73rem', cursor: 'pointer', textDecoration: 'none' }}>
+              ← Home
+            </Link>
+          </div>
         </div>
       </header>
 

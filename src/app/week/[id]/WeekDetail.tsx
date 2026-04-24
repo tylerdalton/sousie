@@ -156,16 +156,23 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 10 }}>
           <div style={{ flex: 1, minWidth: 0 }}>
             <h1 style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-              <span style={{ fontSize: '1.3rem' }}>👩‍🍳</span>
-              <span style={{ opacity: 0.7, fontWeight: 400, fontSize: '1rem' }}>Sousie</span>
+              <Link href="/weeks" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: 7 }}>
+                <span style={{ fontSize: '1.3rem' }}>👩‍🍳</span>
+                <span style={{ opacity: 0.7, fontWeight: 400, fontSize: '1rem' }}>Sousie</span>
+              </Link>
               <span style={{ opacity: 0.4, fontWeight: 300 }}>·</span>
               {week.label}
             </h1>
             <p>{week.notes ?? 'A digital butler for your pantry.'}</p>
           </div>
-          <Link href="/" style={{ background: 'rgba(255,255,255,0.18)', border: 'none', color: 'white', borderRadius: 8, padding: '5px 10px', fontSize: '0.73rem', cursor: 'pointer', flexShrink: 0, textDecoration: 'none' }}>
-            ← Weeks
-          </Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+            <Link href="/dietary-counsel" style={{ background: 'rgba(255,255,255,0.18)', color: 'white', borderRadius: 8, padding: '5px 10px', fontSize: '0.73rem', textDecoration: 'none', fontWeight: 600 }}>
+              🥗 Counsel
+            </Link>
+            <Link href="/weeks" style={{ background: 'rgba(255,255,255,0.18)', color: 'white', borderRadius: 8, padding: '5px 10px', fontSize: '0.73rem', textDecoration: 'none' }}>
+              ← Weeks
+            </Link>
+          </div>
         </div>
         <div className="header-stats">
           <div className="stat-pill">To buy: <span>{neededCount}</span> items</div>

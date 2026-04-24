@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import type { Recipe, RecipeGroup } from '@/lib/types'
 
@@ -69,13 +70,22 @@ export default function RecipeForm({ recipe }: Props) {
   return (
     <div>
       <header className="app-header">
-        <h1 style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: '1.3rem' }}>👩‍🍳</span>
-          <span style={{ opacity: 0.7, fontWeight: 400, fontSize: '1rem' }}>Sousie</span>
-          <span style={{ opacity: 0.4, fontWeight: 300 }}>·</span>
-          {isNew ? 'Add Recipe' : 'Edit Recipe'}
-        </h1>
-        <p>{isNew ? "Add to Sousie's recipe library" : recipe.title}</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <div>
+            <h1 style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Link href="/weeks" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: '1.3rem' }}>👩‍🍳</span>
+                <span style={{ opacity: 0.7, fontWeight: 400, fontSize: '1rem' }}>Sousie</span>
+              </Link>
+              <span style={{ opacity: 0.4, fontWeight: 300 }}>·</span>
+              {isNew ? 'Add Recipe' : 'Edit Recipe'}
+            </h1>
+            <p>{isNew ? "Add to Sousie's recipe library" : recipe.title}</p>
+          </div>
+          <Link href="/dietary-counsel" style={{ background: 'rgba(255,255,255,0.18)', color: 'white', borderRadius: 8, padding: '5px 10px', fontSize: '0.73rem', textDecoration: 'none', fontWeight: 600 }}>
+            🥗 Counsel
+          </Link>
+        </div>
       </header>
 
       <div className="panel">
