@@ -98,3 +98,39 @@ export const RECIPE_GROUP_LABELS: Record<RecipeGroup, string> = {
   breakfast: '🌅 Breakfasts',
   dressing: '🧴 Dressings',
 }
+
+// ── Subscription / Billing ─────────────────────────────────
+export type SubscriptionStatus = 'active' | 'trialing' | 'past_due' | 'canceled' | 'none'
+export type UserRole = 'admin' | 'user'
+
+export interface Profile {
+  id: string
+  user_id: string
+  role: UserRole
+  stripe_customer_id: string | null
+  stripe_subscription_id: string | null
+  subscription_status: SubscriptionStatus
+  subscription_period_end: string | null
+  created_at: string
+}
+
+export interface PricingConfig {
+  id: string
+  monthly_price_cents: number
+  annual_price_cents: number
+  stripe_monthly_price_id: string | null
+  stripe_annual_price_id: string | null
+  coupon_description: string
+  updated_at: string
+}
+
+export interface Coupon {
+  id: string
+  code: string
+  stripe_coupon_id: string | null
+  stripe_promo_code_id: string | null
+  description: string | null
+  discount_display: string
+  active: boolean
+  created_at: string
+}

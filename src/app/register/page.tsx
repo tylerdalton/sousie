@@ -1,34 +1,42 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirm, setConfirm] = useState('')
   const [error, setError] = useState('')
+  const [done, setDone] = useState(false)
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
-  const router = useRouter()
   const supabase = createClient()
 
-  async function handleLogin(e: React.FormEvent) {
+  async function handleRegister(e: React.FormEvent) {
     e.preventDefault()
+    if (password !== confirm) {
+      setError('Passwords do not match.')
+      return
+    }
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters.')
+      return
+    }
     setLoading(true)
     setError('')
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { error } = await supabase.auth.signUp({ email, password })
     if (error) {
       setError(error.message)
       setLoading(false)
     } else {
-      router.push('/weeks')
-      router.refresh()
+      setDone(true)
     }
   }
 
-  async function handleGoogleSignIn() {
+  async function handleGoogleSignUp() {
     setGoogleLoading(true)
     setError('')
     const { error } = await supabase.auth.signInWithOAuth({
@@ -41,20 +49,37 @@ export default function LoginPage() {
     }
   }
 
+  if (done) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f0f4f1', padding: '20px' }}>
+        <div style={{ background: 'white', borderRadius: 16, padding: '32px 28px', width: '100%', maxWidth: 380, boxShadow: '0 4px 20px rgba(0,0,0,0.1)', textAlign: 'center' }}>
+          <div style={{ fontSize: '3rem', marginBottom: 12 }}>📬</div>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#1f2937', marginBottom: 10 }}>Check your inbox</h2>
+          <p style={{ fontSize: '0.82rem', color: '#6b7280', lineHeight: 1.6, marginBottom: 20 }}>
+            We sent a confirmation link to <strong>{email}</strong>. Click it to activate your account, then sign in.
+          </p>
+          <Link href="/login" style={{ background: '#2d7a4f', color: 'white', borderRadius: 8, padding: '10px 24px', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none', display: 'inline-block' }}>
+            Go to Sign In
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f0f4f1', padding: '20px' }}>
       <div style={{ background: 'white', borderRadius: 16, padding: '32px 28px', width: '100%', maxWidth: 380, boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
           <div style={{ fontSize: '3rem', marginBottom: 8, lineHeight: 1 }}>👩‍🍳</div>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#2d7a4f', letterSpacing: '-0.02em' }}>Sousie</h1>
+          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#2d7a4f', letterSpacing: '-0.02em' }}>Create account</h1>
           <p style={{ fontSize: '0.72rem', color: '#9ca3af', marginTop: 3, fontStyle: 'italic' }}>
-            Sousie says… it&apos;s time to eat well.
+            Start your free demo, then subscribe for full access.
           </p>
         </div>
 
         {/* Google */}
         <button
-          onClick={handleGoogleSignIn}
+          onClick={handleGoogleSignUp}
           disabled={googleLoading || loading}
           style={{
             width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
@@ -64,12 +89,12 @@ export default function LoginPage() {
           }}
         >
           <GoogleIcon />
-          {googleLoading ? 'Redirecting…' : 'Continue with Google'}
+          {googleLoading ? 'Redirecting…' : 'Sign up with Google'}
         </button>
 
         <Divider />
 
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleRegister}>
           <label className="form-label">Email</label>
           <input
             className="form-input"
@@ -87,9 +112,20 @@ export default function LoginPage() {
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
+            placeholder="At least 8 characters"
+            required
+            autoComplete="new-password"
+          />
+
+          <label className="form-label" style={{ marginTop: 14 }}>Confirm password</label>
+          <input
+            className="form-input"
+            type="password"
+            value={confirm}
+            onChange={e => setConfirm(e.target.value)}
             placeholder="••••••••"
             required
-            autoComplete="current-password"
+            autoComplete="new-password"
           />
 
           {error && (
@@ -104,13 +140,13 @@ export default function LoginPage() {
             disabled={loading || googleLoading}
             style={{ width: '100%', justifyContent: 'center', marginTop: 20, padding: '10px' }}
           >
-            {loading ? 'Signing in…' : 'Sign In with Email'}
+            {loading ? 'Creating account…' : 'Create Account'}
           </button>
         </form>
 
         <p style={{ textAlign: 'center', fontSize: '0.76rem', color: '#9ca3af', marginTop: 16 }}>
-          Don&apos;t have an account?{' '}
-          <a href="/register" style={{ color: '#2d7a4f' }}>Sign up</a>
+          Already have an account?{' '}
+          <Link href="/login" style={{ color: '#2d7a4f' }}>Sign in</Link>
         </p>
       </div>
     </div>

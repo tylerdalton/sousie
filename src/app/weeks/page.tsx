@@ -10,6 +10,14 @@ export default async function WeeksPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('user_id', user.id)
+    .single()
+
+  const isAdmin = profile?.role === 'admin'
+
   const { data: weeks } = await supabase
     .from('weeks')
     .select('*')
@@ -49,10 +57,18 @@ export default async function WeeksPage() {
             </Link>
             <p>A digital butler for your pantry.</p>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             <Link href="/dietary-counsel" style={{ background: 'rgba(255,255,255,0.18)', color: 'white', borderRadius: 8, padding: '5px 10px', fontSize: '0.73rem', textDecoration: 'none', fontWeight: 600 }}>
-              🥗 Dietary Counsel
+              🥗 Counsel
             </Link>
+            <Link href="/account" style={{ background: 'rgba(255,255,255,0.18)', color: 'white', borderRadius: 8, padding: '5px 10px', fontSize: '0.73rem', textDecoration: 'none', fontWeight: 600 }}>
+              Account
+            </Link>
+            {isAdmin && (
+              <Link href="/admin" style={{ background: 'rgba(255,255,255,0.18)', color: 'white', borderRadius: 8, padding: '5px 10px', fontSize: '0.73rem', textDecoration: 'none', fontWeight: 600 }}>
+                ⚙️ Admin
+              </Link>
+            )}
             <form action={logout}>
               <button type="submit" style={{ background: 'rgba(255,255,255,0.18)', border: 'none', color: 'white', borderRadius: 8, padding: '5px 10px', fontSize: '0.73rem', cursor: 'pointer' }}>
                 Sign out

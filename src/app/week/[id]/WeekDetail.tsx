@@ -22,9 +22,10 @@ interface Props {
   slots: (MealSlot & { recipe: Recipe | null })[]
   recipes: Recipe[]
   substitutions: Substitution[]
+  readOnly?: boolean
 }
 
-export default function WeekDetail({ week, items: initialItems, slots: initialSlots, recipes, substitutions }: Props) {
+export default function WeekDetail({ week, items: initialItems, slots: initialSlots, recipes, substitutions, readOnly = false }: Props) {
   const [activeTab, setActiveTab] = useState<Tab>('list')
   const [items, setItems] = useState<ShoppingItem[]>(initialItems)
   const [slots, setSlots] = useState<(MealSlot & { recipe: Recipe | null })[]>(initialSlots)
@@ -206,7 +207,7 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
           <div className="toolbar no-print">
             <button className="btn btn-secondary" onClick={() => setCollapsedCats(new Set())}>Expand All</button>
             <button className="btn btn-secondary" onClick={() => setCollapsedCats(new Set(CATEGORY_ORDER))}>Collapse All</button>
-            <button className="btn btn-danger" onClick={clearAll}>Clear All</button>
+            {!readOnly && <button className="btn btn-danger" onClick={clearAll}>Clear All</button>}
           </div>
 
           {CATEGORY_ORDER.map(catId => {
@@ -232,26 +233,28 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
                       <div key={item.id} className={`item ${item.checked ? 'have-it' : ''}`}>
                         <div
                           className={`checkbox-wrap ${item.checked ? 'checked' : ''}`}
-                          onClick={() => toggleItem(item.id)}
+                          onClick={() => !readOnly && toggleItem(item.id)}
                         >
                           {item.checked && '✓'}
                         </div>
-                        <div className="item-info" onClick={() => toggleItem(item.id)}>
+                        <div className="item-info" onClick={() => !readOnly && toggleItem(item.id)}>
                           <div className="item-name">{item.name}</div>
                           {item.qty && <div className="item-qty">{item.qty}</div>}
                           {item.note && <div className="item-note">{item.note}</div>}
                         </div>
                         <div className="item-cost">${Number(item.cost).toFixed(2)}</div>
-                        <button
-                          onClick={() => deleteItem(item.id)}
-                          className="no-print"
-                          style={{ background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer', padding: '0 4px', fontSize: '0.8rem' }}
-                          title="Remove item"
-                        >✕</button>
+                        {!readOnly && (
+                          <button
+                            onClick={() => deleteItem(item.id)}
+                            className="no-print"
+                            style={{ background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer', padding: '0 4px', fontSize: '0.8rem' }}
+                            title="Remove item"
+                          >✕</button>
+                        )}
                       </div>
                     ))}
                     {/* Add item inline */}
-                    {addingItem === catId ? (
+                    {!readOnly && addingItem === catId ? (
                       <div style={{ display: 'flex', gap: 8, padding: '8px 15px', borderTop: '1px dashed var(--gray-mid)', alignItems: 'center' }}>
                         <input
                           autoFocus
@@ -267,7 +270,7 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
                         <button className="btn btn-primary" style={{ padding: '4px 10px' }} onClick={() => addItem(catId)}>Add</button>
                         <button className="btn btn-secondary" style={{ padding: '4px 10px' }} onClick={() => { setAddingItem(null); setNewItemName('') }}>Cancel</button>
                       </div>
-                    ) : (
+                    ) : !readOnly ? (
                       <button
                         className="no-print"
                         onClick={() => setAddingItem(catId)}
@@ -275,7 +278,7 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
                       >
                         + Add item to {CATEGORY_LABELS[catId].replace(/^.+ /, '')}
                       </button>
-                    )}
+                    ) : null}
                   </div>
                 )}
               </div>
@@ -313,7 +316,7 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
                       {getMealText(slot) || <span style={{ color: 'var(--gray)', fontStyle: 'italic' }}>No meal planned</span>}
                       {slot?.recipe && <span className="recipe-arrow">→ view recipe</span>}
                     </button>
-                    {slot && (
+                    {slot && !readOnly && (
                       <button
                         className="no-print"
                         onClick={() => setEditingSlot({ slotId: slot.id, dayIndex, mealType: label.toLowerCase() })}
@@ -339,10 +342,12 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
       {/* ══ TAB: RECIPES ══ */}
       {activeTab === 'recipes' && (
         <div className="panel">
-          <div className="toolbar no-print">
-            <Link href="/recipes/new" className="btn btn-primary">+ Add Recipe</Link>
-            <Link href="/recipes" className="btn btn-secondary">Full Library</Link>
-          </div>
+          {!readOnly && (
+            <div className="toolbar no-print">
+              <Link href="/recipes/new" className="btn btn-primary">+ Add Recipe</Link>
+              <Link href="/recipes" className="btn btn-secondary">Full Library</Link>
+            </div>
+          )}
           {recipeGroups.map(group => (
             <div key={group.key}>
               <div className="recipe-section-label">{group.label}</div>

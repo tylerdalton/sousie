@@ -14,42 +14,51 @@ export default function MarketingPage() {
           <Link href="/dietary-counsel" style={{ color: '#2d7a4f', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none' }}>
             Dietary Counsel
           </Link>
-          <Link href="/login" style={{ background: '#2d7a4f', color: 'white', borderRadius: 8, padding: '7px 16px', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none' }}>
+          <Link href="/login" style={{ color: '#4b5563', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none' }}>
             Sign In
+          </Link>
+          <Link href="/register" style={{ background: '#2d7a4f', color: 'white', borderRadius: 8, padding: '7px 16px', fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none' }}>
+            Get Started
           </Link>
         </div>
       </nav>
 
       {/* Hero */}
       <section style={{ background: 'linear-gradient(135deg, #2d7a4f 0%, #1e5436 100%)', color: 'white', padding: '64px 24px 72px', textAlign: 'center' }}>
-        <div style={{ maxWidth: 560, margin: '0 auto' }}>
+        <div style={{ maxWidth: 580, margin: '0 auto' }}>
           <div style={{ fontSize: '4rem', marginBottom: 16, lineHeight: 1 }}>👩‍🍳</div>
           <h1 style={{ fontSize: 'clamp(2rem, 6vw, 3rem)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: 18 }}>
-            Meet Sousie
+            Your personal sous chef
           </h1>
-          <p style={{ fontSize: 'clamp(1rem, 3vw, 1.2rem)', opacity: 0.88, lineHeight: 1.6, marginBottom: 32 }}>
-            Your personal sous chef. Plan meals for the week, generate AI-powered recipes tailored to your family, build your shopping list, and stay on budget — all in one place.
+          <p style={{ fontSize: 'clamp(1rem, 3vw, 1.18rem)', opacity: 0.88, lineHeight: 1.65, marginBottom: 14 }}>
+            Plan a week of meals in minutes. Sousie uses AI to generate recipes tailored to your family, builds your shopping list, and keeps you on budget — all in one place.
+          </p>
+          <p style={{ fontSize: '0.84rem', opacity: 0.7, marginBottom: 36 }}>
+            No spreadsheets. No Pinterest rabbit holes. Just dinner, sorted.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/login" style={{ background: 'white', color: '#2d7a4f', borderRadius: 10, padding: '12px 28px', fontSize: '0.95rem', fontWeight: 700, textDecoration: 'none', display: 'inline-block' }}>
-              Get Started
+            <Link href="/register" style={{ background: 'white', color: '#2d7a4f', borderRadius: 10, padding: '12px 28px', fontSize: '0.95rem', fontWeight: 700, textDecoration: 'none', display: 'inline-block' }}>
+              Get Started — $5/mo
             </Link>
-            <a href="#how-it-works" style={{ background: 'rgba(255,255,255,0.15)', color: 'white', borderRadius: 10, padding: '12px 28px', fontSize: '0.95rem', fontWeight: 600, textDecoration: 'none', display: 'inline-block', border: '1.5px solid rgba(255,255,255,0.3)' }}>
-              How it works
-            </a>
+            <Link href="/demo" style={{ background: 'rgba(255,255,255,0.15)', color: 'white', borderRadius: 10, padding: '12px 28px', fontSize: '0.95rem', fontWeight: 600, textDecoration: 'none', display: 'inline-block', border: '1.5px solid rgba(255,255,255,0.3)' }}>
+              Try Demo →
+            </Link>
           </div>
+          <p style={{ fontSize: '0.72rem', opacity: 0.55, marginTop: 14 }}>
+            Demo requires a free account · Cancel anytime
+          </p>
         </div>
       </section>
 
-      {/* Feature pills */}
-      <section style={{ background: 'white', padding: '24px', borderBottom: '1px solid #e5e7eb' }}>
+      {/* Value pills */}
+      <section style={{ background: 'white', padding: '22px', borderBottom: '1px solid #e5e7eb' }}>
         <div style={{ maxWidth: 640, margin: '0 auto', display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
           {[
-            { icon: '🌱', text: 'Vegetarian-forward' },
-            { icon: '🐟', text: 'Fish & light protein' },
-            { icon: '🚫🌾', text: 'Gluten-free friendly' },
-            { icon: '💰', text: 'Budget under $100/week' },
-            { icon: '👨‍👩‍👧‍👦', text: 'Family of 4' },
+            { icon: '🤖', text: 'AI-generated meal plans' },
+            { icon: '🛒', text: 'Automatic shopping list' },
+            { icon: '💰', text: 'Weekly budget tracking' },
+            { icon: '🔄', text: 'Ingredient substitutions' },
+            { icon: '📱', text: 'Works offline (PWA)' },
           ].map(({ icon, text }) => (
             <span key={text} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#e8f5ee', color: '#2d7a4f', borderRadius: 20, padding: '6px 14px', fontSize: '0.8rem', fontWeight: 600 }}>
               {icon} {text}
@@ -61,10 +70,10 @@ export default function MarketingPage() {
       {/* How it works */}
       <section id="how-it-works" style={{ padding: '56px 24px', maxWidth: 680, margin: '0 auto' }}>
         <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#1f2937', textAlign: 'center', marginBottom: 8, letterSpacing: '-0.02em' }}>
-          How Sousie works
+          From blank week to full fridge in 4 steps
         </h2>
         <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '0.88rem', marginBottom: 40 }}>
-          From blank week to full fridge in four steps.
+          No learning curve. You'll have your first week planned in minutes.
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -73,25 +82,25 @@ export default function MarketingPage() {
               step: '1',
               icon: '📅',
               title: 'Create a new week',
-              desc: 'Name your week, set a start date, and add any dietary notes — or tap "Use default" to load your saved preferences.',
+              desc: 'Name your week, set a start date, and add dietary notes — or load your saved preferences with one tap.',
             },
             {
               step: '2',
               icon: '✨',
               title: 'Let AI plan your meals',
-              desc: 'Choose how many breakfasts, lunches, and dinners you want AI to generate. Sousie builds a prompt you paste into any AI chat (Claude, ChatGPT, etc.). The AI returns detailed recipes — full ingredient lists, step-by-step instructions, timing, and tips.',
+              desc: 'Tell Sousie how many breakfasts, lunches, and dinners you want. It builds an AI prompt you paste into Claude or ChatGPT. The result: full recipes with ingredients, steps, timing, and tips — tuned to your family.',
             },
             {
               step: '3',
               icon: '🗓️',
-              title: 'Review your meal plan',
-              desc: 'AI meals appear pre-assigned across the week. Swap any meal for one from your recipe library, type in a quick note, or leave it blank to fill in later.',
+              title: 'Review and customize',
+              desc: 'Meals appear pre-assigned across the week. Swap any meal, type in a quick note, or leave a slot blank. You\'re always in control.',
             },
             {
               step: '4',
               icon: '🛒',
               title: 'Shopping list — done',
-              desc: 'Sousie consolidates every ingredient from every recipe into one deduplicated shopping list, already sorted by category (produce, protein, pantry, spices) with cost estimates so you know you\'re under budget before you hit the store.',
+              desc: 'Every ingredient from every recipe, consolidated, deduplicated, sorted by category, and priced. You\'ll know you\'re under budget before you hit the store.',
             },
           ].map(({ step, icon, title, desc }) => (
             <div key={step} style={{ display: 'flex', gap: 16, background: 'white', borderRadius: 12, padding: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
@@ -107,6 +116,13 @@ export default function MarketingPage() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: 36 }}>
+          <Link href="/demo" style={{ background: '#2d7a4f', color: 'white', borderRadius: 10, padding: '11px 28px', fontSize: '0.9rem', fontWeight: 700, textDecoration: 'none', display: 'inline-block' }}>
+            See a live demo →
+          </Link>
+          <p style={{ fontSize: '0.72rem', color: '#9ca3af', marginTop: 10 }}>Free preview · sign-in required</p>
         </div>
       </section>
 
@@ -128,7 +144,7 @@ export default function MarketingPage() {
               { icon: '✅', title: 'Shop as you go', desc: 'Check off items at the store. Already-have items stay visible but struck through.' },
               { icon: '🖨️', title: 'Print-ready', desc: 'One-tap print view for your shopping list, meal plan, or both.' },
               { icon: '📱', title: 'Works offline', desc: 'Installable as a PWA — use it at the grocery store without a signal.' },
-              { icon: '🥗', title: 'Dietary counsel', desc: 'Guides on gluten-free living, budget dining, and more — interactive and always available.' },
+              { icon: '🥗', title: 'Dietary counsel', desc: 'Guides on gluten-free living, budget dining, and more — always available, even without a subscription.' },
             ].map(({ icon, title, desc }) => (
               <div key={title} style={{ background: '#f0f4f1', borderRadius: 10, padding: '16px', display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <span style={{ fontSize: '1.4rem' }}>{icon}</span>
@@ -140,6 +156,47 @@ export default function MarketingPage() {
         </div>
       </section>
 
+      {/* Pricing */}
+      <section style={{ padding: '56px 24px', background: '#f0f4f1' }}>
+        <div style={{ maxWidth: 640, margin: '0 auto' }}>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#1f2937', textAlign: 'center', marginBottom: 8, letterSpacing: '-0.02em' }}>
+            Simple, honest pricing
+          </h2>
+          <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '0.88rem', marginBottom: 36 }}>
+            One plan. Everything included. Cancel anytime.
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+            {/* Monthly */}
+            <div style={{ background: 'white', borderRadius: 14, padding: '28px 24px', boxShadow: '0 1px 3px rgba(0,0,0,0.08)', border: '2px solid #e5e7eb' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 12 }}>Monthly</div>
+              <div style={{ fontSize: '2.6rem', fontWeight: 900, color: '#2d7a4f', letterSpacing: '-0.04em', lineHeight: 1, marginBottom: 4 }}>$5</div>
+              <div style={{ fontSize: '0.82rem', color: '#6b7280', marginBottom: 20 }}>per month, billed monthly</div>
+              <Link href="/register" style={{ display: 'block', textAlign: 'center', background: '#e8f5ee', color: '#2d7a4f', borderRadius: 8, padding: '10px', fontSize: '0.88rem', fontWeight: 700, textDecoration: 'none' }}>
+                Get Started
+              </Link>
+            </div>
+
+            {/* Annual */}
+            <div style={{ background: 'white', borderRadius: 14, padding: '28px 24px', boxShadow: '0 2px 12px rgba(45,122,79,0.15)', border: '2px solid #2d7a4f', position: 'relative' }}>
+              <div style={{ position: 'absolute', top: -13, left: '50%', transform: 'translateX(-50%)', background: '#2d7a4f', color: 'white', borderRadius: 20, padding: '4px 14px', fontSize: '0.68rem', fontWeight: 700, whiteSpace: 'nowrap' }}>
+                BEST VALUE — 2 MONTHS FREE
+              </div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#2d7a4f', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 12 }}>Annual</div>
+              <div style={{ fontSize: '2.6rem', fontWeight: 900, color: '#2d7a4f', letterSpacing: '-0.04em', lineHeight: 1, marginBottom: 4 }}>$50</div>
+              <div style={{ fontSize: '0.82rem', color: '#6b7280', marginBottom: 20 }}>per year · $4.17/mo</div>
+              <Link href="/register" style={{ display: 'block', textAlign: 'center', background: '#2d7a4f', color: 'white', borderRadius: 8, padding: '10px', fontSize: '0.88rem', fontWeight: 700, textDecoration: 'none' }}>
+                Get Started
+              </Link>
+            </div>
+          </div>
+
+          <p style={{ textAlign: 'center', fontSize: '0.76rem', color: '#9ca3af', marginTop: 20 }}>
+            Cancel anytime from your account settings. Secure payment via Stripe.
+          </p>
+        </div>
+      </section>
+
       {/* CTA */}
       <section style={{ padding: '64px 24px', textAlign: 'center', background: 'linear-gradient(135deg, #2d7a4f 0%, #1e5436 100%)', color: 'white' }}>
         <div style={{ maxWidth: 480, margin: '0 auto' }}>
@@ -148,17 +205,22 @@ export default function MarketingPage() {
             Ready to eat well this week?
           </h2>
           <p style={{ opacity: 0.85, fontSize: '0.9rem', lineHeight: 1.6, marginBottom: 28 }}>
-            Sousie is a private tool for our family — sign in to get started.
+            Start your first week in minutes. Try the demo to see exactly what you get, or jump straight in for $5/month.
           </p>
-          <Link href="/login" style={{ background: 'white', color: '#2d7a4f', borderRadius: 10, padding: '13px 32px', fontSize: '0.95rem', fontWeight: 700, textDecoration: 'none', display: 'inline-block' }}>
-            Sign In
-          </Link>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/register" style={{ background: 'white', color: '#2d7a4f', borderRadius: 10, padding: '13px 28px', fontSize: '0.95rem', fontWeight: 700, textDecoration: 'none', display: 'inline-block' }}>
+              Get Started
+            </Link>
+            <Link href="/demo" style={{ background: 'rgba(255,255,255,0.15)', color: 'white', borderRadius: 10, padding: '13px 28px', fontSize: '0.95rem', fontWeight: 600, textDecoration: 'none', display: 'inline-block', border: '1.5px solid rgba(255,255,255,0.3)' }}>
+              Try Demo →
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
       <footer style={{ background: '#1e5436', color: 'rgba(255,255,255,0.5)', padding: '20px 24px', textAlign: 'center', fontSize: '0.72rem' }}>
-        👩‍🍳 Sousie · A digital butler for your pantry.
+        👩‍🍳 Sousie · A digital sous chef for your kitchen.
       </footer>
 
     </div>
