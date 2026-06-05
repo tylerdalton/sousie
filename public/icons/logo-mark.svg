@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Rounded background -->
+  <rect width="32" height="32" rx="9" fill="#2d7a4f"/>
+  <!-- Stylised spoon: handle -->
+  <path d="M16 26 L16 17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <!-- Spoon bowl -->
+  <ellipse cx="16" cy="13" rx="4.5" ry="5.5" fill="white" opacity="0.95"/>
+  <!-- Small leaf accent inside bowl -->
+  <path d="M14 13.5 Q16 10.5 18 13.5 Q16 15 14 13.5Z" fill="#2d7a4f"/>
+</svg>

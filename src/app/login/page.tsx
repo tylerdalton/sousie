@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import Logo from '@/components/Logo'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -45,8 +46,9 @@ export default function LoginPage() {
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f0f4f1', padding: '20px' }}>
       <div style={{ background: 'white', borderRadius: 16, padding: '32px 28px', width: '100%', maxWidth: 380, boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
-          <div style={{ fontSize: '3rem', marginBottom: 8, lineHeight: 1 }}>👩‍🍳</div>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#2d7a4f', letterSpacing: '-0.02em' }}>Sousie</h1>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
+            <Logo size={36} color="#2d7a4f" />
+          </div>
           <p style={{ fontSize: '0.72rem', color: '#9ca3af', marginTop: 3, fontStyle: 'italic' }}>
             Sousie says… it&apos;s time to eat well.
           </p>

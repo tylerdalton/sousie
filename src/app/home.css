@@ -1,0 +1,321 @@
+/* ── MARKETING PAGE ─────────────────────────────────────────── */
+
+.mkt-page {
+  min-height: 100vh;
+  background: #f0f4f1;
+  font-family: var(--font-body);
+}
+
+/* Nav */
+.mkt-nav {
+  background: var(--cream, white);
+  border-bottom: 1px solid var(--gray-mid);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.mkt-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.mkt-nav-link {
+  color: var(--text-light);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.mkt-nav-link:hover { color: var(--green); }
+.mkt-nav-link--green { color: var(--green); }
+.mkt-nav-cta {
+  background: var(--green);
+  color: white;
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--transition), transform var(--transition);
+}
+.mkt-nav-cta:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+/* Hero */
+.mkt-hero {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  color: white;
+  padding: 64px 24px 72px;
+  text-align: center;
+}
+.mkt-hero-inner { max-width: 580px; margin: 0 auto; }
+.mkt-hero-emoji { font-size: 4rem; margin-bottom: 16px; line-height: 1; display: block; }
+.mkt-hero h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+.mkt-hero-sub {
+  font-size: clamp(1rem, 3vw, 1.18rem);
+  opacity: 0.88;
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+.mkt-hero-fine { font-size: 0.84rem; opacity: 0.7; margin-bottom: 36px; }
+.mkt-hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.mkt-hero-btn-primary {
+  background: white;
+  color: var(--green);
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.mkt-hero-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
+.mkt-hero-btn-ghost {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  transition: background var(--transition);
+}
+.mkt-hero-btn-ghost:hover { background: rgba(255,255,255,0.25); }
+.mkt-hero-note { font-size: 0.72rem; opacity: 0.55; margin-top: 14px; }
+
+/* Value pills */
+.mkt-pills {
+  background: white;
+  padding: 22px;
+  border-bottom: 1px solid var(--gray-mid);
+}
+.mkt-pills-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.mkt-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-light);
+  color: var(--green);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Section wrapper */
+.mkt-section {
+  padding: 56px 24px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.mkt-section--white {
+  background: white;
+  max-width: none;
+  border-top: 1px solid var(--gray-mid);
+  border-bottom: 1px solid var(--gray-mid);
+}
+.mkt-section--white .mkt-section-inner { max-width: 680px; margin: 0 auto; }
+.mkt-section-h2 {
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.mkt-section-sub {
+  text-align: center;
+  color: var(--gray);
+  font-size: 0.88rem;
+  margin-bottom: 36px;
+}
+
+/* How it works steps */
+.mkt-steps { display: flex; flex-direction: column; gap: 16px; }
+.mkt-step {
+  display: flex;
+  gap: 16px;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.mkt-step:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+.mkt-step-num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--green);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+  font-family: var(--font-heading);
+}
+.mkt-step-body {}
+.mkt-step-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 5px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.mkt-step-icon { font-size: 1.1rem; }
+.mkt-step-desc { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+.mkt-section-cta { text-align: center; margin-top: 36px; }
+.mkt-section-cta-note { font-size: 0.72rem; color: #9ca3af; margin-top: 10px; }
+
+/* Feature grid */
+.mkt-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 4px;
+}
+.mkt-feature-card {
+  background: #f0f4f1;
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mkt-feature-icon { font-size: 1.4rem; }
+.mkt-feature-title { font-weight: 700; font-size: 0.85rem; color: var(--text); }
+.mkt-feature-desc { font-size: 0.76rem; color: var(--gray); line-height: 1.5; }
+
+/* Pricing */
+.mkt-pricing { padding: 56px 24px; background: #f0f4f1; }
+.mkt-pricing-inner { max-width: 640px; margin: 0 auto; }
+.mkt-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+.mkt-pricing-card {
+  background: white;
+  border-radius: 14px;
+  padding: 28px 24px;
+  box-shadow: var(--shadow);
+  border: 2px solid var(--gray-mid);
+  position: relative;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.mkt-pricing-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+.mkt-pricing-card--featured {
+  border-color: var(--green);
+  box-shadow: 0 2px 12px rgba(45,122,79,0.15);
+}
+.mkt-pricing-badge {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--green);
+  color: white;
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.mkt-pricing-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gray);
+  margin-bottom: 12px;
+}
+.mkt-pricing-card--featured .mkt-pricing-label { color: var(--green); }
+.mkt-pricing-price {
+  font-family: var(--font-heading);
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: var(--green);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.mkt-pricing-period { font-size: 0.82rem; color: var(--gray); margin-bottom: 20px; }
+.mkt-pricing-btn {
+  display: block;
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background var(--transition), transform var(--transition);
+}
+.mkt-pricing-btn--ghost {
+  background: var(--green-light);
+  color: var(--green);
+}
+.mkt-pricing-btn--ghost:hover { background: var(--green-mid); }
+.mkt-pricing-btn--solid {
+  background: var(--green);
+  color: white;
+}
+.mkt-pricing-btn--solid:hover { background: var(--green-dark); transform: translateY(-1px); }
+.mkt-pricing-note {
+  text-align: center;
+  font-size: 0.76rem;
+  color: #9ca3af;
+  margin-top: 20px;
+}
+
+/* Bottom CTA */
+.mkt-cta {
+  padding: 64px 24px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  color: white;
+}
+.mkt-cta-inner { max-width: 480px; margin: 0 auto; }
+.mkt-cta-emoji { font-size: 2.5rem; margin-bottom: 12px; display: block; }
+.mkt-cta h2 {
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.mkt-cta-sub { opacity: 0.85; font-size: 0.9rem; line-height: 1.6; margin-bottom: 28px; }
+.mkt-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* Footer */
+.mkt-footer {
+  background: var(--green-dark);
+  color: rgba(255,255,255,0.5);
+  padding: 20px 24px;
+  text-align: center;
+  font-size: 0.72rem;
+  font-family: var(--font-body);
+}

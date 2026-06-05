@@ -1,12 +1,21 @@
 @import "tailwindcss";
 
 :root {
+  /* typography */
+  --font-heading: var(--font-heading, Georgia, serif);
+  --font-body: var(--font-body, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+
+  /* brand colors */
   --green: #2d7a4f;
   --green-dark: #1e5436;
   --green-light: #e8f5ee;
   --green-mid: #c3e6d1;
   --orange: #e07b39;
   --orange-light: #fdf3ec;
+  --color-accent: #e07b39;
+  --cream: #faf8f4;
+
+  /* neutrals */
   --gray: #6b7280;
   --gray-light: #f3f4f6;
   --gray-mid: #e5e7eb;
@@ -14,17 +23,25 @@
   --text-light: #6b7280;
   --red: #dc2626;
   --blue: #2563eb;
+
+  /* layout */
   --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-hover: 0 4px 14px rgba(0,0,0,0.13);
   --radius: 10px;
+  --transition: 0.15s ease;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-body);
   background: #f0f4f1;
   color: var(--text);
   min-height: 100vh;
+}
+
+h1, h2, h3, .wordmark {
+  font-family: var(--font-heading);
 }
 
 /* ── HEADER ── */
@@ -84,11 +101,11 @@ body {
   font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
 }
 .btn-primary { background: var(--green); color: white; }
-.btn-primary:hover { background: var(--green-dark); }
+.btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); box-shadow: 0 3px 8px rgba(45,122,79,0.3); }
 .btn-secondary { background: white; color: var(--text); border: 1.5px solid var(--gray-mid); }
-.btn-secondary:hover { background: var(--gray-light); }
+.btn-secondary:hover { background: var(--gray-light); transform: translateY(-1px); }
 .btn-orange { background: var(--orange); color: white; }
-.btn-orange:hover { background: #c4682c; }
+.btn-orange:hover { background: #c4682c; transform: translateY(-1px); box-shadow: 0 3px 8px rgba(224,123,57,0.3); }
 .btn-danger { background: #fee2e2; color: var(--red); border: 1.5px solid #fca5a5; }
 .btn-danger:hover { background: #fecaca; }
 .toolbar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
@@ -129,7 +146,8 @@ body {
   cursor: pointer; transition: all 0.15s; background: white;
 }
 .checkbox-wrap:hover { border-color: var(--green); }
-.checkbox-wrap.checked { background: var(--green); border-color: var(--green); }
+.checkbox-wrap.checked { background: var(--green); border-color: var(--green); animation: checkPulse 0.2s ease-out; }
+@keyframes checkPulse { 0% { transform: scale(1); } 50% { transform: scale(1.18); } 100% { transform: scale(1); } }
 .item-info { flex: 1; min-width: 0; cursor: pointer; }
 .item-name { font-size: 0.85rem; font-weight: 500; }
 .item-qty { font-size: 0.73rem; color: var(--gray); margin-top: 1px; }
@@ -188,13 +206,15 @@ body {
 }
 .recipe-card {
   background: white; border-radius: var(--radius); margin-bottom: 8px; box-shadow: var(--shadow);
-  overflow: hidden; cursor: pointer; transition: box-shadow 0.15s; border: none; width: 100%; text-align: left;
+  overflow: hidden; cursor: pointer;
+  transition: box-shadow var(--transition), transform var(--transition);
+  border: none; width: 100%; text-align: left;
 }
-.recipe-card:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.12); }
+.recipe-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
 .recipe-card-inner { display: flex; align-items: center; gap: 12px; padding: 13px 15px; }
 .recipe-emoji { font-size: 1.6rem; flex-shrink: 0; }
 .recipe-card-info { flex: 1; min-width: 0; }
-.recipe-card-title { font-size: 0.87rem; font-weight: 600; }
+.recipe-card-title { font-size: 0.87rem; font-weight: 600; font-family: var(--font-heading); }
 .recipe-card-sub { font-size: 0.72rem; color: var(--gray); margin-top: 2px; }
 .recipe-card-tags { display: flex; gap: 5px; margin-top: 5px; flex-wrap: wrap; }
 .recipe-tag {
@@ -221,7 +241,7 @@ body {
   padding: 12px 18px 14px; border-bottom: 1px solid var(--gray-mid);
   display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
 }
-.modal-title { font-size: 1rem; font-weight: 700; line-height: 1.3; flex: 1; }
+.modal-title { font-size: 1rem; font-weight: 700; line-height: 1.3; flex: 1; font-family: var(--font-heading); }
 .modal-sub { font-size: 0.75rem; color: var(--gray); margin-top: 3px; }
 .modal-close {
   font-size: 1.2rem; color: var(--gray); cursor: pointer; padding: 2px 6px;
@@ -325,9 +345,10 @@ body {
 .week-card {
   background: white; border-radius: var(--radius); padding: 16px;
   box-shadow: var(--shadow); margin-bottom: 12px; cursor: pointer;
-  transition: box-shadow 0.15s; display: block; text-decoration: none; color: inherit;
+  transition: box-shadow var(--transition), transform var(--transition);
+  display: block; text-decoration: none; color: inherit;
 }
-.week-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.12); }
+.week-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
 .week-card-title { font-size: 1rem; font-weight: 700; color: var(--green); margin-bottom: 4px; }
 .week-card-meta { font-size: 0.75rem; color: var(--gray); margin-bottom: 8px; }
 .week-card-stats { display: flex; gap: 10px; flex-wrap: wrap; }

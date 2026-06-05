@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import type { Week } from '@/lib/types'
 import WeekActions from '../WeekActions'
+import Logo from '@/components/Logo'
 
 export default async function WeeksPage() {
   const supabase = await createClient()
@@ -51,9 +52,7 @@ export default async function WeeksPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
             <Link href="/weeks" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <h1 style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontSize: '1.5rem' }}>👩‍🍳</span> Sousie
-              </h1>
+              <Logo size={30} color="white" />
             </Link>
             <p>A digital butler for your pantry.</p>
           </div>

@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import type { Week, ShoppingItem, MealSlot, Recipe, Substitution, ShoppingCategory } from '@/lib/types'
+import Logo from '@/components/Logo'
 import {
   CATEGORY_LABELS,
   CATEGORY_ORDER,
@@ -157,9 +158,8 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 10 }}>
           <div style={{ flex: 1, minWidth: 0 }}>
             <h1 style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-              <Link href="/weeks" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: 7 }}>
-                <span style={{ fontSize: '1.3rem' }}>👩‍🍳</span>
-                <span style={{ opacity: 0.7, fontWeight: 400, fontSize: '1rem' }}>Sousie</span>
+              <Link href="/weeks" style={{ textDecoration: 'none', color: 'inherit', opacity: 0.85 }}>
+                <Logo size={24} color="white" />
               </Link>
               <span style={{ opacity: 0.4, fontWeight: 300 }}>·</span>
               {week.label}
