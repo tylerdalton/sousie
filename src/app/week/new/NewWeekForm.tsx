@@ -74,6 +74,7 @@ export default function NewWeekForm({ recipes, defaultLabel, weekId, initialNote
   const [aiBreakfasts, setAiBreakfasts] = useState(0)
   const [aiLunches, setAiLunches] = useState(0)
   const [aiDinners, setAiDinners] = useState(0)
+  const [freezerInventory, setFreezerInventory] = useState('')
   const [generatedPrompt, setGeneratedPrompt] = useState('')
   const [aiResponse, setAiResponse] = useState('')
   const [aiParsed, setAiParsed] = useState(false)
@@ -133,7 +134,15 @@ export default function NewWeekForm({ recipes, defaultLabel, weekId, initialNote
 
     const notesLine = notes.trim() ? `\nWeek theme / dietary notes: ${notes.trim()}` : ''
 
-    const prompt = `You are helping me plan meals for a week. Generate exactly ${totalAiMeals} meal${totalAiMeals > 1 ? 's' : ''} with full recipes AND a consolidated shopping list in JSON format.${notesLine}
+    const freezerBlock = freezerInventory.trim()
+      ? `\n\nI'm cleaning out my freezer(s). Here's what's currently in there:\n${freezerInventory.trim()}\n\nPrioritize using a variety of these freezer items across the week's meals, paired with fresh ingredients as needed. Each recipe's ingredients list should call out the specific freezer item(s) it uses with a real quantity (e.g. "2 cups pulled pork (from freezer)"). Spread the freezer items across different days rather than repeating the same one, and don't force an item into a meal it doesn't fit — it's fine to leave some for a future week.`
+      : ''
+
+    const shoppingRule = freezerInventory.trim()
+      ? `- shopping_items must ONLY contain fresh or pantry items I still need to buy — never list anything from the freezer inventory above, even in a different form (e.g. don't add "chicken" if "cubed chicken" is already in the freezer list). Combine duplicate needs across recipes into one line.`
+      : `- shopping_items: consolidate all ingredients across every recipe into a single deduplicated list — combine quantities when the same ingredient appears in multiple recipes`
+
+    const prompt = `You are helping me plan meals for a week. Generate exactly ${totalAiMeals} meal${totalAiMeals > 1 ? 's' : ''} with full recipes AND a consolidated shopping list in JSON format.${notesLine}${freezerBlock}
 
 Generate:
 ${requests.join('\n')}
@@ -182,7 +191,7 @@ Structural rules:
 - recipe_group: use "breakfast" for breakfasts, "dinner" for lunches and dinners
 - ingredients and instructions are plain strings (no bullets, no numbering)
 - Do not use the same day_index + meal_type pair twice
-- shopping_items: consolidate all ingredients across every recipe into a single deduplicated list — combine quantities when the same ingredient appears in multiple recipes
+${shoppingRule}
 - shopping_items category must be one of: "produce", "protein", "pantry", "spices"
 - shopping_items cost is a number in USD (e.g. 3.99) — estimate a realistic grocery store price for the quantity listed; do not use 0
 - shopping_items qty and note can be null if not applicable
@@ -500,6 +509,18 @@ Structural rules:
             <div className="info-box">
               Choose how many meals you want AI to plan. You&apos;ll copy the prompt, paste it into any AI chat (Claude, ChatGPT, etc.), then paste the response back to auto-fill your meal plan. Or skip to plan manually.
             </div>
+
+            <label className="form-label">🧊 Freezer inventory (optional)</label>
+            <textarea
+              className="form-textarea"
+              value={freezerInventory}
+              onChange={e => setFreezerInventory(e.target.value)}
+              placeholder={'Cleaning out the freezer? Paste what\'s in there, one item per line, e.g.\ncubed chicken - 1 quart\nsalmon - 1.25 lb\nmixed berries - 2 bags'}
+              style={{ height: 110, marginBottom: 4 }}
+            />
+            <p style={{ fontSize: '0.72rem', color: 'var(--gray)', marginTop: 0, marginBottom: 20 }}>
+              When you list freezer items, the AI builds meals around them and the shopping list below will only include what&apos;s still fresh or missing.
+            </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
               {([
