@@ -75,6 +75,7 @@ export default function NewWeekForm({ recipes, defaultLabel, weekId, initialNote
   const [aiLunches, setAiLunches] = useState(0)
   const [aiDinners, setAiDinners] = useState(0)
   const [freezerInventory, setFreezerInventory] = useState('')
+  const [prepAhead, setPrepAhead] = useState<string[]>([])
   const [generatedPrompt, setGeneratedPrompt] = useState('')
   const [aiResponse, setAiResponse] = useState('')
   const [aiParsed, setAiParsed] = useState(false)
@@ -174,7 +175,8 @@ Return ONLY valid JSON in this exact format, no markdown fences, no extra text:
     { "category": "protein", "name": "Salmon fillets", "qty": "1.5 lbs", "cost": 14.50, "note": "wild-caught preferred" },
     { "category": "pantry", "name": "Rolled oats", "qty": "1 cup", "cost": 1.50, "note": null },
     { "category": "spices", "name": "Smoked paprika", "qty": null, "cost": 2.00, "note": null }
-  ]
+  ],
+  "prep_ahead": ["Marinate the chicken tonight so Tuesday is just cook-and-serve.", "Cook a batch of rice — it holds well and covers two meals this week."]
 }
 
 Recipe quality requirements — every recipe must meet ALL of these:
@@ -195,6 +197,7 @@ ${shoppingRule}
 - shopping_items category must be one of: "produce", "protein", "pantry", "spices"
 - shopping_items cost is a number in USD (e.g. 3.99) — estimate a realistic grocery store price for the quantity listed; do not use 0
 - shopping_items qty and note can be null if not applicable
+- prep_ahead: a short list of practical things worth doing in advance on a single prep day before the week starts — thawing that needs a day or two of lead time, doughs/sauces/grains that hold well once made, chopping that keeps. Order them with the most time-sensitive first. Each entry is one plain-language sentence. If nothing in this week's meals meaningfully benefits from advance prep, return an empty array.
 - Return ONLY the JSON object`
 
     setGeneratedPrompt(prompt)
@@ -283,6 +286,11 @@ ${shoppingRule}
             note: item.note ?? '',
           }))
         if (importedItems.length > 0) setShoppingItems(importedItems)
+      }
+
+      // Import prep-ahead tips if present
+      if (Array.isArray(data.prep_ahead)) {
+        setPrepAhead(data.prep_ahead.filter((tip: unknown): tip is string => typeof tip === 'string' && tip.trim().length > 0))
       }
 
       setAiParsed(true)
@@ -383,7 +391,7 @@ ${shoppingRule}
       // Update existing week
       const { error } = await supabase
         .from('weeks')
-        .update({ label: label.trim(), start_date: startDate || null, notes: notes || null })
+        .update({ label: label.trim(), start_date: startDate || null, notes: notes || null, prep_ahead: prepAhead })
         .eq('id', weekId)
 
       if (error) { setSaving(false); alert('Failed to update week: ' + error.message); return }
@@ -400,7 +408,7 @@ ${shoppingRule}
       // Create new week
       const { data: week, error } = await supabase
         .from('weeks')
-        .insert({ label: label.trim(), start_date: startDate || null, notes: notes || null })
+        .insert({ label: label.trim(), start_date: startDate || null, notes: notes || null, prep_ahead: prepAhead })
         .select()
         .single()
 
@@ -767,6 +775,26 @@ ${shoppingRule}
             <div className="info-box">
               Add items you need to buy for this week. You can also add items later from the shopping list tab.
             </div>
+
+            {prepAhead.length > 0 && (
+              <div style={{ background: 'white', borderRadius: 'var(--radius)', padding: '12px 14px', marginBottom: 16, boxShadow: 'var(--shadow)' }}>
+                <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--gray)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 8 }}>
+                  🧺 Prep Ahead
+                </div>
+                {prepAhead.map((tip, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, padding: '6px 0', borderBottom: i < prepAhead.length - 1 ? '1px solid var(--gray-mid)' : 'none' }}>
+                    <span style={{ flex: 1, fontSize: '0.83rem' }}>{tip}</span>
+                    <button
+                      onClick={() => setPrepAhead(prev => prev.filter((_, idx) => idx !== i))}
+                      style={{ background: 'none', border: 'none', color: 'var(--gray)', cursor: 'pointer', fontSize: '1rem', padding: '0 4px', lineHeight: 1 }}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {shoppingItems.map((item, i) => (
               <div key={i} style={{ background: 'white', borderRadius: 'var(--radius)', padding: '12px 14px', marginBottom: 8, boxShadow: 'var(--shadow)' }}>
                 <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>

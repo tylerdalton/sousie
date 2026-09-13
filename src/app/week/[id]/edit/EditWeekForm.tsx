@@ -22,6 +22,7 @@ export default function EditWeekForm({ week, slots: initialSlots, items: initial
   const [label, setLabel] = useState(week.label)
   const [startDate, setStartDate] = useState(week.start_date ?? '')
   const [notes, setNotes] = useState(week.notes ?? '')
+  const [prepAheadText, setPrepAheadText] = useState((week.prep_ahead ?? []).join('\n'))
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
 
@@ -40,10 +41,12 @@ export default function EditWeekForm({ week, slots: initialSlots, items: initial
   const saveDetails = async () => {
     if (!label.trim()) return
     setSaving(true)
+    const prepAhead = prepAheadText.split('\n').map(t => t.trim()).filter(Boolean)
     await supabase.from('weeks').update({
       label: label.trim(),
       start_date: startDate || null,
       notes: notes || null,
+      prep_ahead: prepAhead,
     }).eq('id', week.id)
     setSaving(false)
     setSaved(true)
@@ -139,6 +142,14 @@ export default function EditWeekForm({ week, slots: initialSlots, items: initial
             value={notes}
             onChange={e => setNotes(e.target.value)}
             placeholder="Dietary notes, budget, family size…"
+          />
+
+          <label className="form-label">🧺 Prep Ahead (optional, one per line)</label>
+          <textarea
+            className="form-textarea"
+            value={prepAheadText}
+            onChange={e => setPrepAheadText(e.target.value)}
+            placeholder="Thaw the chicken tonight&#10;Cook a batch of rice"
           />
 
           <button

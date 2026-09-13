@@ -5,6 +5,10 @@ export const DEMO_WEEK: Week = {
   label: 'Sample Week — May 5',
   start_date: '2025-05-05',
   notes: 'Vegetarian-forward · gluten-free · under $95',
+  prep_ahead: [
+    'Cook a batch of quinoa — it holds well and covers two meals this week.',
+    'Whisk up the tahini-lemon dressing tonight so it just needs a shake before serving.',
+  ],
   created_at: '2025-05-01T00:00:00Z',
 }
 

@@ -15,7 +15,7 @@ import {
 import RecipeModal from './RecipeModal'
 import RecipePicker from './RecipePicker'
 
-type Tab = 'list' | 'meals' | 'recipes' | 'swaps' | 'print'
+type Tab = 'list' | 'meals' | 'prep' | 'recipes' | 'swaps' | 'print'
 
 interface Props {
   week: Week
@@ -36,6 +36,7 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
   const [openSwaps, setOpenSwaps] = useState<Set<string>>(new Set())
   const [swapSearch, setSwapSearch] = useState('')
   const [printOpt, setPrintOpt] = useState<'list' | 'meals' | 'both'>('list')
+  const [preppedIdx, setPreppedIdx] = useState<Set<number>>(new Set())
   const [editingSlot, setEditingSlot] = useState<{ slotId: string; dayIndex: number; mealType: string } | null>(null)
   const [addingItem, setAddingItem] = useState<ShoppingCategory | null>(null)
   const [newItemName, setNewItemName] = useState('')
@@ -148,6 +149,15 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
     })
   }
 
+  // ── Prep ahead helpers ──────────────────────────────────────────
+  const togglePrepped = (i: number) => {
+    setPreppedIdx(prev => {
+      const next = new Set(prev)
+      if (next.has(i)) next.delete(i); else next.add(i)
+      return next
+    })
+  }
+
   // ── Print helpers ──────────────────────────────────────────────
   const printNow = () => window.print()
 
@@ -183,7 +193,7 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
       </header>
 
       <div className="tabs no-print">
-        {(['list', 'meals', 'recipes', 'swaps', 'print'] as Tab[]).map(tab => (
+        {(['list', 'meals', 'prep', 'recipes', 'swaps', 'print'] as Tab[]).map(tab => (
           <button
             key={tab}
             className={`tab ${activeTab === tab ? 'active' : ''}`}
@@ -191,6 +201,7 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
           >
             {tab === 'list' && '✏️ Shopping'}
             {tab === 'meals' && '🗓️ Meal Plan'}
+            {tab === 'prep' && '🧺 Prep Ahead'}
             {tab === 'recipes' && '📖 Recipes'}
             {tab === 'swaps' && '🔄 Swaps'}
             {tab === 'print' && '🖨️ Print'}
@@ -336,6 +347,35 @@ export default function WeekDetail({ week, items: initialItems, slots: initialSl
             <strong>🧴 Dressings this week</strong>
             Mon/Wed → Lime-Cumin · Tue/Thu → Tahini-Lemon · Thu/Fri → Ginger-Tamari · Fri → Peanut Sauce
           </div>
+        </div>
+      )}
+
+      {/* ══ TAB: PREP AHEAD ══ */}
+      {activeTab === 'prep' && (
+        <div className="panel">
+          <div className="info-box no-print">
+            Things worth doing in advance on a single prep day — everything else in the recipes is fine to do day-of.
+          </div>
+
+          {week.prep_ahead.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '20px', color: 'var(--gray)', fontSize: '0.83rem' }}>
+              Nothing needs advance prep this week — every recipe is fine to start day-of.
+            </div>
+          ) : (
+            week.prep_ahead.map((tip, i) => (
+              <div key={i} className={`item ${preppedIdx.has(i) ? 'have-it' : ''}`}>
+                <div
+                  className={`checkbox-wrap ${preppedIdx.has(i) ? 'checked' : ''}`}
+                  onClick={() => togglePrepped(i)}
+                >
+                  {preppedIdx.has(i) && '✓'}
+                </div>
+                <div className="item-info" onClick={() => togglePrepped(i)}>
+                  <div className="item-name">{tip}</div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       )}
 

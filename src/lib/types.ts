@@ -44,6 +44,7 @@ export interface Week {
   label: string
   start_date: string | null
   notes: string | null
+  prep_ahead: string[]
   created_at: string
 }
 
